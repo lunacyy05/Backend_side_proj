@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>글래스 캘린더 with 일정</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="calendar-container">
+    <header>
+      <button id="prev">&#10094;</button>
+      <h1 id="monthYear"></h1>
+      <button id="next">&#10095;</button>
+    </header>
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>일</th><th>월</th><th>화</th><th>수</th>
+          <th>목</th><th>금</th><th>토</th>
+        </tr>
+      </thead>
+      <tbody id="calendar-body"></tbody>
+    </table>
+  </div>
+
+  <!-- 일정 입력 모달 -->
+  <div id="memoModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal">&times;</span>
+      <h2 id="memoDate"></h2>
+      <textarea id="memoText" placeholder="일정을 입력하세요..."></textarea>
+      <div class="modal-buttons">
+        <button id="saveMemo">저장</button>
+        <button id="deleteMemo">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
