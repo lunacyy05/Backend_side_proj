@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Web Version with Theme Toggle</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* --- CSS 변수를 사용한 테마 설정 --- */
+        :root {
+            /* 다크 모드 (기본) */
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --title-color: #FFFFFF;
+            --card-bg: #1c1c1e;
+            --border-color: #333;
+            --subtle-border-color: #2c2c2e;
+            --hover-color: #0A84FF;
+        }
+
+        body.light-theme {
+            /* 라이트 모드 */
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --title-color: #000000;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --subtle-border-color: #e9ecef;
+            --hover-color: #0056b3;
+        }
+
+        /* 기본 스타일 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Pretendard', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- 상단 고정 내비게이션 --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(var(--bg-color-rgb, 18, 18, 18), 0.8); /* JS에서 변환된 RGB값 사용 */
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 5%;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--hover-color);
+        }
+        
+        /* --- 테마 전환 버튼 --- */
+        .theme-toggle-container {
+            position: absolute;
+            right: 5%;
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            background-color: var(--card-bg);
+            padding: 3px;
+        }
+
+        .theme-toggle-button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 활성화된 버튼 스타일 */
+        .theme-toggle-button.active {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        /* 아이콘 전환 효과 */
+        .theme-toggle-button .fa-sun { display: none; }
+        .theme-toggle-button .fa-moon { display: block; }
+        body.light-theme .theme-toggle-button .fa-sun { display: block; }
+        body.light-theme .theme-toggle-button .fa-moon { display: none; }
+
+        /* --- 전체 화면을 채우는 섹션 스타일 --- */
+        .fullpage-section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 5%;
+            border-bottom: 1px solid var(--subtle-border-color);
+            text-align: center;
+        }
+        
+        .fullpage-section h1 {
+            font-size: 48px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--title-color);
+        }
+        
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        /* --- 컴포넌트 스타일 (CSS 변수 적용) --- */
+        #main .card,
+        #analyze01 .calendar,
+        #analyze01 .event-list,
+        #analyze02 .placeholder-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        #main .progress-bar-container { background-color: var(--subtle-border-color); }
+        #main .donut-chart-hole { background-color: var(--bg-color); transition: background-color 0.3s; }
+        #analyze01 .event-list h3 { border-bottom-color: var(--border-color); }
+        
+        /* 기존 스타일들은 그대로 유지 (색상 부분만 변수로 대체) */
+        #main .info-panel{flex-basis: 50%; display: flex; flex-direction: column; gap: 30px; text-align: left;}
+        #main .card{padding: 20px; border-radius: 12px; font-size: 18px;}
+        #main .progress-section{display: flex; align-items: center; font-size: 18px;}
+        #main .progress-bar-container{flex-grow: 1; height: 12px; border-radius: 6px; margin: 0 20px;}
+        #main .progress-bar{width: 25%; height: 100%; background-color: #0A84FF; border-radius: 6px;}
+        #main .legend ul{list-style: none; display: flex; flex-direction: column; gap: 18px;}
+        #main .legend li{display: flex; align-items: center; font-size: 18px;}
+        #main .legend .dot{width: 16px; height: 16px; border-radius: 50%; margin-right: 15px;}
+        #main .legend .dashes{flex-grow: 1; border-bottom: 2px dotted #444; margin: 0 15px;}
+        #main .donut-chart{width: 350px; height: 350px; border-radius: 50%; background: conic-gradient(#A964E8 0% 30%, #32D74B 30% 55%, #FF453A 55% 80%, #0A84FF 80% 100%); display: flex; justify-content: center; align-items: center;}
+        #main .donut-chart-hole{width: 230px; height: 230px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 600;}
+        #analyze01 .summary-text{font-size: 18px; line-height: 1.7; margin-bottom: 30px;}
+        #analyze01 .calendar-container{display: flex; gap: 50px; align-items: flex-start;}
+        #analyze01 .calendar{border-radius: 12px; padding: 30px; width: 400px;}
+        #analyze01 .calendar-header{display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 600; font-size: 20px;}
+        #analyze01 .calendar-grid{display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; text-align: center;}
+        #analyze01 .calendar-grid div{font-size: 16px; padding: 5px 0;}
+        #analyze01 .day-name{color: #8E8E93;}
+        #analyze01 .day.selected{background-color: #0A84FF; color: white !important; border-radius: 50%; width: 36px; height: 36px; line-height: 36px; margin: 0 auto;}
+        #analyze01 .event-list{text-align: left; width: 300px; padding: 30px; border-radius: 12px;}
+        #analyze01 .event-list h3{font-size: 22px; margin-bottom: 20px; padding-bottom: 15px;}
+        #analyze01 .event-item{padding: 15px 0; font-size: 18px;}
+        #analyze02 .placeholder-box{border-radius: 12px; padding: 60px 80px; font-size: 24px;}
+        #settings .setting-text{font-size: 28px; line-height: 1.8;}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#main">메인</a></li>
+                <li><a href="#analyze01">분석 1</a></li>
+                <li><a href="#analyze02">분석 2</a></li>
+                <li><a href="#settings">설정</a></li>
+            </ul>
+        </nav>
+        <div class="theme-toggle-container">
+            <button id="light-theme-button" class="theme-toggle-button" aria-label="Switch to light theme">
+                <i class="fas fa-sun"></i>
+            </button>
+            <button id="dark-theme-button" class="theme-toggle-button" aria-label="Switch to dark theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="main" class="fullpage-section">
+            <div class="content-wrapper">
+                <div class="info-panel">
+                    <h1>대시보드</h1>
+                    <div class="card">나의 소비 패턴을 분석</div>
+                    <div class="progress-section">
+                        <span>남은 돈 25%</span>
+                        <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                    </div>
+                    <div class="legend">
+                        <ul>
+                            <li><span class="dot" style="background-color: #A964E8;"></span><span class="label">교통비</span><span class="dashes"></span><span>30%</span></li>
+                            <li><span class="dot" style="background-color: #32D74B;"></span><span class="label">통신비</span><span class="dashes"></span><span>25%</span></li>
+                            <li><span class="dot" style="background-color: #FF453A;"></span><span class="label">통신비</span><span class="dashes"></span><span>25%</span></li>
+                            <li><span class="dot" style="background-color: #0A84FF;"></span><span class="label">비비빅</span><span class="dashes"></span><span>20%</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="donut-chart">
+                    <div class="donut-chart-hole">원형그래프</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analyze01" class="fullpage-section">
+            <div>
+                <h1>지출 분석</h1>
+                <p class="summary-text">
+                    분석한 내용을 요약하면 좋을 것 같은데..<br>
+                    예) X월 X일에 예상하지 못한 지출이 발생했습니다.
+                </p>
+                <div class="calendar-container">
+                    <div class="calendar">
+                        <div class="calendar-header"><span>&lt;</span><span>April 2025</span><span>&gt;</span></div>
+                        <div class="calendar-grid">
+                            <div class="day-name">SUN</div><div class="day-name">MON</div><div class="day-name">TUE</div><div class="day-name">WED</div><div class="day-name">THU</div><div class="day-name">FRI</div><div class="day-name">SAT</div>
+                            <div></div><div></div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+                            <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div>
+                            <div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div>
+                            <div class="day selected">20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div>
+                            <div>27</div><div>28</div><div>29</div><div>30</div>
+                        </div>
+                    </div>
+                    <div class="event-list">
+                        <h3>주요 이벤트</h3>
+                        <div class="event-item">4월 1일: Adobe 정기결제</div>
+                        <div class="event-item">4월 10일: 월급날</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analyze02" class="fullpage-section">
+            <h1>추가 분석</h1>
+            <div class="placeholder-box">
+                뭔가 의미있는 공간이 되었으면 함
+            </div>
+        </section>
+
+        <section id="settings" class="fullpage-section">
+            <h1>프로필 및 설정</h1>
+            <div class="setting-text">
+                <p>월급이 얼마인지,</p>
+                <p>이상지출은 월급의 몇 %로 설정할지 등을 정하는 공간</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 필요한 DOM 요소들을 가져옵니다.
+        const lightThemeButton = document.getElementById('light-theme-button');
+        const darkThemeButton = document.getElementById('dark-theme-button');
+        const body = document.body;
+
+        // 투명한 header 배경색을 위한 RGB 값 변환 함수
+        function setHeaderBackground() {
+            const bgColor = getComputedStyle(body).getPropertyValue('--bg-color').trim();
+            const hex = bgColor.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            body.style.setProperty('--bg-color-rgb', `${r}, ${g}, ${b}`);
+        }
+
+        // 테마를 적용하고 버튼 상태를 업데이트하는 함수
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                lightThemeButton.classList.add('active');
+                darkThemeButton.classList.remove('active');
+            } else {
+                body.classList.remove('light-theme');
+                darkThemeButton.classList.add('active');
+                lightThemeButton.classList.remove('active');
+            }
+            setHeaderBackground();
+            // 테마를 localStorage에 저장
+            localStorage.setItem('theme', theme);
+        }
+
+        // 라이트 모드 버튼 클릭 이벤트
+        lightThemeButton.addEventListener('click', () => {
+            applyTheme('light');
+        });
+
+        // 다크 모드 버튼 클릭 이벤트
+        darkThemeButton.addEventListener('click', () => {
+            applyTheme('dark');
+        });
+
+        // 페이지 로드 시 저장된 테마 확인 및 적용
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // 기본값 다크
+            applyTheme(savedTheme);
+        });
+    </script>
+</body>
+</html>
