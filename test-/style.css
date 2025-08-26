@@ -1,0 +1,294 @@
+.main {
+  background-color: #ffffff;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  width: 100vw;
+}
+
+.main .div {
+  background-color: #ffffff;
+  overflow: hidden;
+  width: 375px;
+  height: 812px;
+  position: relative;
+}
+
+.main .overlap {
+  position: absolute;
+  width: 375px;
+  height: 305px;
+  top: 507px;
+  left: 0;
+}
+
+.main .tab-bar {
+  position: absolute;
+  width: 375px;
+  height: 78px;
+  top: 226px;
+  left: 0;
+}
+
+.main .list {
+  position: absolute;
+  width: 375px;
+  height: 227px;
+  top: 0;
+  left: 0;
+}
+
+.main .group {
+  top: 9px;
+  left: 28px;
+  position: absolute;
+  width: 324px;
+  height: 28px;
+}
+
+.main .ellipse {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 0;
+  left: 0;
+  background-color: #d39bff;
+  border-radius: 14px;
+  aspect-ratio: 1;
+}
+
+.main .text-wrapper {
+  height: 20px;
+  top: 4px;
+  left: 47px;
+  font-family: "SF Pro-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 17px;
+  letter-spacing: -0.43px;
+  line-height: 20px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .group-2 {
+  top: 43px;
+  left: 27px;
+  position: absolute;
+  width: 324px;
+  height: 28px;
+}
+
+.main .ellipse-2 {
+  background-color: #2ee85c;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  aspect-ratio: 1;
+}
+
+.main .group-3 {
+  top: 77px;
+  left: 27px;
+  position: absolute;
+  width: 324px;
+  height: 28px;
+}
+
+.main .ellipse-3 {
+  background-color: #ff5d5d;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  aspect-ratio: 1;
+}
+
+.main .group-4 {
+  top: 111px;
+  left: 27px;
+  position: absolute;
+  width: 324px;
+  height: 28px;
+}
+
+.main .ellipse-4 {
+  background-color: #0088ff;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  aspect-ratio: 1;
+}
+
+.main .status-bar {
+  position: absolute;
+  width: 375px;
+  height: 44px;
+  top: 0;
+  left: 0;
+}
+
+.main .overlap-group {
+  position: absolute;
+  width: 376px;
+  height: 123px;
+  top: 44px;
+  left: 0;
+}
+
+.main .title {
+  position: absolute;
+  width: 375px;
+  height: 53px;
+  top: 0;
+  left: 0;
+}
+
+.main .text-wrapper-2 {
+  height: 45px;
+  top: 3px;
+  left: 21px;
+  font-family: "Inter", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 32px;
+  letter-spacing: -0.64px;
+  line-height: 44.8px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .explation {
+  position: absolute;
+  width: 376px;
+  height: 74px;
+  top: 49px;
+  left: 0;
+}
+
+.main .p {
+  height: 22px;
+  top: 25px;
+  left: 21px;
+  font-family: "Inter", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: -0.32px;
+  line-height: 22.4px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .overlap-2 {
+  position: absolute;
+  width: 375px;
+  height: 340px;
+  top: 167px;
+  left: 0;
+}
+
+.main .div-2 {
+  position: absolute;
+  width: 375px;
+  height: 340px;
+  top: 0;
+  left: 0;
+}
+
+.main .div-wrapper {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  top: 81px;
+  left: 63px;
+  background-color: #d9d9d9;
+  border-radius: 125px;
+}
+
+.main .text-wrapper-3 {
+  height: 20px;
+  top: 114px;
+  left: 86px;
+  font-family: "SF Pro-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 17px;
+  letter-spacing: -0.43px;
+  line-height: 20px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .frame {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 10px;
+  left: 335px;
+  background-color: #0088ff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.main .text-wrapper-4 {
+  height: 45px;
+  top: -8px;
+  left: 5px;
+  font-family: "CookieRun-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 32px;
+  letter-spacing: -0.64px;
+  line-height: 44.8px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .text-wrapper-5 {
+  height: 20px;
+  top: 14px;
+  left: 142px;
+  font-family: "SF Pro-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 17px;
+  letter-spacing: -0.43px;
+  line-height: 20px;
+  position: absolute;
+  white-space: nowrap;
+}
+
+.main .progress-bar {
+  position: absolute;
+  width: 273px;
+  height: 44px;
+  top: 37px;
+  left: 51px;
+  background-color: var(--colors-backgrounds-primary);
+}
+
+.main .track {
+  position: relative;
+  width: 241px;
+  height: 6px;
+  top: 20px;
+  left: 16px;
+  background-color: var(--colors-fills-primary);
+  border-radius: 3px;
+}
+
+.main .filled {
+  width: 76px;
+  height: 6px;
+  background-color: var(--colors-colors-blue);
+  border-radius: 3px;
+}
