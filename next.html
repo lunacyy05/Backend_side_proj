@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커스텀 슬라이드 바</title>
+    <style>
+        :root {
+            --range-progress: 50%; /* JavaScript가 이 변수 값을 업데이트합니다. */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        /* 슬라이드 바의 현재 퍼센트 값을 보여주는 텍스트 */
+        .percentage-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        /* 커스텀 슬라이드 바 스타일 */
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .range-slider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--range-progress);
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+
+        /* 슬라이더 thumb (조절 핸들) 스타일링 */
+        .range-input {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            appearance: none; /* 기본 스타일 제거 */
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 4px solid #007bff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .range-input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 4px solid #007bff;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>이상지출 감지 기준</h2>
+        <div class="range-slider">
+            <input type="range" class="range-input" min="0" max="100" value="50">
+        </div>
+        <p class="percentage-value">50%</p>
+    </div>
+
+    <script>
+        const rangeInput = document.querySelector('.range-input');
+        const percentageValue = document.querySelector('.percentage-value');
+        const root = document.documentElement;
+
+        rangeInput.addEventListener('input', (event) => {
+            // 슬라이드 바의 현재 값(0-100)을 가져옵니다.
+            const value = event.target.value;
+            
+            // CSS 변수 `--range-progress`를 업데이트하여 채워진 부분을 동적으로 조절합니다.
+            root.style.setProperty('--range-progress', `${value}%`);
+
+            // 현재 값을 퍼센트로 표시
+            percentageValue.textContent = `${value}%`;
+        });
+    </script>
+</body>
+</html>
