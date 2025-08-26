@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # 1. Spring Boot 애플리케이션 서비스
+  app:
+    build: . # 현재 폴더의 Dockerfile을 사용해 이미지를 만듭니다.
+    ports:
+      - "8080:8080" # 내 컴퓨터의 8080 포트와 컨테이너의 8080 포트를 연결합니다.
+    depends_on:
+      db:
+        condition: service_healthy # 'db' 서비스가 완전히 준비될 때까지 기다립니다.
+    environment:
+      # 중요: DB 주소를 'localhost'가 아닌 서비스 이름 'db'로 지정합니다.
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/consumption_db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  # 2. PostgreSQL 데이터베이스 서비스
+  db:
+    image: postgres:14-alpine # 가벼운 PostgreSQL 이미지를 사용합니다.
+    environment:
+      - POSTGRES_DB=consumption_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    healthcheck: # DB가 연결받을 준비가 되었는지 확인하는 기능입니다.
+      test: ["CMD-SHELL", "pg_isready -U user -d consumption_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # DB 데이터를 보존하기 위한 설정입니다.
+
+volumes:
+  postgres_data:
