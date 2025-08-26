@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>달력 지출 관리</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f7f9;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .calendar-section, .expenditure-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        .calendar-section {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .expenditure-section {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .calendar-header .nav {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #666;
+            user-select: none;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar-table th, .calendar-table td {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1rem;
+        }
+
+        .calendar-table th {
+            color: #999;
+            font-weight: normal;
+        }
+
+        .calendar-table td {
+            position: relative;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* 날짜에 마우스 올렸을 때 파란색 동그라미 */
+        .calendar-table td:not(.empty):hover::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #4117e9; /* 연한 파란색 */
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* 클릭된 날짜의 파란색 동그라미 */
+        .calendar-table td.active {
+            color: rgb(60, 14, 223);
+            font-weight: bold;
+        }
+
+        .calendar-table td.active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #007bff; /* 파란색 */
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .expenditure-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .expenditure-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .expenditure-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        .expenditure-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="calendar-section">
+            <div class="calendar-header">
+                <span class="nav-prev">&lt;</span>
+                <span class="month-year">April 2025</span>
+                <span class="nav-next">&gt;</span>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="empty"></td><td class="empty"></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+                    </tr>
+                    <tr>
+                        <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+                    </tr>
+                    <tr>
+                        <td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
+                    </tr>
+                    <tr>
+                        <td class="active">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+                    </tr>
+                    <tr>
+                        <td>27</td><td>28</td><td>29</td><td>30</td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="expenditure-section">
+            <h2>주요 이벤트</h2>
+            <ul class="expenditure-list" id="expenditure-list">
+                </ul>
+        </div>
+    </div>
+
+    <script>
+        // 날짜별 지출 데이터 (실제 서비스에서는 서버에서 받아와야 함)
+        const expenditureData = {
+            '1': ['친구와 저녁 식사: 25,000원'],
+            '15': ['교통비: 2,000원', '커피: 4,500원'],
+            '20': ['예상치 못한 지출 발생', '온라인 쇼핑: 50,000원'],
+            '23': ['마트 장보기: 70,000원']
+        };
+
+        const calendarCells = document.querySelectorAll('.calendar-table td');
+        const expenditureList = document.getElementById('expenditure-list');
+
+        // 페이지 로드 시 기본값(20일)의 지출 내역 표시
+        displayExpenditure('20');
+
+        calendarCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                // 이전에 선택된 날짜의 active 클래스 제거
+                document.querySelectorAll('.calendar-table td.active').forEach(td => {
+                    td.classList.remove('active');
+                });
+
+                // 클릭된 날짜에 active 클래스 추가 (빈 칸 제외)
+                if (!cell.classList.contains('empty')) {
+                    cell.classList.add('active');
+                    const day = cell.textContent.trim();
+                    displayExpenditure(day);
+                }
+            });
+        });
+
+        function displayExpenditure(day) {
+            expenditureList.innerHTML = ''; // 기존 리스트 초기화
+
+            if (expenditureData[day]) {
+                expenditureData[day].forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    expenditureList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = '해당 날짜의 지출 내역이 없습니다.';
+                expenditureList.appendChild(li);
+            }
+        }
+    </script>
+
+</body>
+</html>
