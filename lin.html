@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라인 다이얼 (수치 포함)</title>
+    
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .dial-container {
+            width: 300px;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .dial-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.5s ease-in-out;
+            width: 50%; /* 초기 게이지 값 */
+        }
+
+        /* 수치 표시를 위한 스타일 */
+        #dial-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>라인 다이얼</h1>
+    
+    <span id="dial-value">50%</span>
+    
+    <div class="dial-container">
+        <div class="dial-fill"></div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="decreaseValue()">값 감소</button>
+        <button onclick="increaseValue()">값 증가</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dialFill = document.querySelector(".dial-fill");
+            // 새로 추가된 수치 표시 요소를 가져옵니다.
+            const dialValueElement = document.getElementById("dial-value");
+            let currentValue = 50;
+
+            function updateDisplay() {
+                dialFill.style.width = currentValue + "%";
+                dialValueElement.textContent = currentValue + "%";
+            }
+            
+            // 페이지 로드 시 초기값 설정
+            updateDisplay();
+
+            window.increaseValue = function() {
+                currentValue = Math.min(100, currentValue + 10);
+                updateDisplay();
+            };
+
+            window.decreaseValue = function() {
+                currentValue = Math.max(0, currentValue - 10);
+                updateDisplay();
+            };
+        });
+    </script>
+</body>
+</html>
