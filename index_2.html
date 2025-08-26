@@ -196,8 +196,7 @@
         <nav>
             <ul>
                 <li><a href="#main">메인</a></li>
-                <li><a href="#analyze01">분석 1</a></li>
-                <li><a href="#analyze02">분석 2</a></li>
+                <li><a href="#analyze01">분석</a></li>
                 <li><a href="#settings">설정</a></li>
             </ul>
         </nav>
@@ -219,6 +218,8 @@
                     <div class="card">나의 소비 패턴을 분석</div>
                     <div class="progress-section">
                         <span>남은 돈 25%</span>
+                        
+
                         <div class="progress-bar-container"><div class="progress-bar"></div></div>
                     </div>
                     <div class="legend">
@@ -232,17 +233,12 @@
                 </div>
                 <div class="donut-chart">
                     <div class="donut-chart-hole">원형그래프</div>
-                </div>
-            </div>
+         
         </section>
 
         <section id="analyze01" class="fullpage-section">
             <div>
                 <h1>지출 분석</h1>
-                <p class="summary-text">
-                    분석한 내용을 요약하면 좋을 것 같은데..<br>
-                    예) X월 X일에 예상하지 못한 지출이 발생했습니다.
-                </p>
                 <div class="calendar-container">
                     <div class="calendar">
                         <div class="calendar-header"><span>&lt;</span><span>April 2025</span><span>&gt;</span></div>
@@ -257,27 +253,34 @@
                     </div>
                     <div class="event-list">
                         <h3>주요 이벤트</h3>
-                        <div class="event-item">4월 1일: Adobe 정기결제</div>
-                        <div class="event-item">4월 10일: 월급날</div>
+                        
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="analyze02" class="fullpage-section">
-            <h1>추가 분석</h1>
-            <div class="placeholder-box">
-                뭔가 의미있는 공간이 되었으면 함
+        <section id="settings" class="fullpage-section">
+            <h1>설정</h1>
+            <h2>수입</h2>
+            <div>
+                <label for ="salary">월급 (단위 : 만원)</label>
+                <input type = "text" id = "salary">
             </div>
+            <h2>지출</h2>
+            <div>
+                <label for = "spend name">지출 이름</label>
+                <input type = "text" id = "spend name" placeholder = "지출 이름을 입력해주세요">
+             </div>   
+             <div>
+                <label>지출 금액</label>
+                <input type = "text" id = "spend size" placeholder = "지출 금액을 입력해주세요">
+            </div>
+            
+        
+            
         </section>
 
-        <section id="settings" class="fullpage-section">
-            <h1>프로필 및 설정</h1>
-            <div class="setting-text">
-                <p>월급이 얼마인지,</p>
-                <p>이상지출은 월급의 몇 %로 설정할지 등을 정하는 공간</p>
-            </div>
-        </section>
+      
     </main>
 
     <script>
