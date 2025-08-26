@@ -1,5 +1,82 @@
-<head>
-    <body>
-        아직 빈 파일임
-    </body>
-</head>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>해커톤 연습 문제</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="styleguide.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="main">
+      <div class="div">
+        <nav class="tab-bar" role="navigation" aria-label="메인 네비게이션">
+          <div class="tabs">
+            <button class="frame" aria-label="홈">
+              <img class="vector" src="img/vector.svg" alt="" role="presentation" />
+            </button>
+            <button class="frame-2" aria-label="검색"></button>
+            <button class="vector-wrapper" aria-label="프로필">
+              <img class="img" src="img/image.svg" alt="" role="presentation" />
+            </button>
+          </div>
+          <div class="home-indicator">
+            <div class="home-indicator-2"></div>
+          </div>
+        </nav>
+        <img class="tabs" src="img/status-bar.svg" alt="상태 표시줄" />
+        <header class="overlap">
+          <div class="title">
+            <h1 class="text-wrapper">해커톤 연습 문제</h1>
+          </div>
+          <div class="explation">
+            <p class="p">앱에&nbsp;&nbsp;대한 설명? 뭔가 설명하는 것이 좋을 것 같아..</p>
+          </div>
+        </header>
+        <section class="overlap-group" aria-labelledby="budget-overview">
+          <div class="div-2">
+            <div class="div-wrapper">
+              <span class="text-wrapper-2">원형그래프</span>
+            </div>
+            <button class="frame-3" aria-label="추가">
+              <span class="text-wrapper-3">+</span>
+            </button>
+            <div class="text-wrapper-4">남은 돈 25%</div>
+          </div>
+          <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="25"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-label="남은 예산 25%"
+          >
+            <div class="track">
+              <div class="filled"></div>
+            </div>
+          </div>
+        </section>
+        <section class="list" aria-labelledby="expense-categories">
+          <h2 id="expense-categories" class="sr-only">지출 카테고리</h2>
+          <div class="group">
+            <div class="ellipse" aria-hidden="true"></div>
+            <div class="text-wrapper-5">교통비-------------------------30%</div>
+          </div>
+          <div class="group-2">
+            <div class="ellipse-2" aria-hidden="true"></div>
+            <div class="text-wrapper-5">통신비-------------------------25%</div>
+          </div>
+          <div class="group-3">
+            <div class="ellipse-3" aria-hidden="true"></div>
+            <div class="text-wrapper-5">정기결제-----------------------25%</div>
+          </div>
+          <div class="group-4">
+            <div class="ellipse-4" aria-hidden="true"></div>
+            <div class="text-wrapper-5">비비빅-------------------------20%</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
