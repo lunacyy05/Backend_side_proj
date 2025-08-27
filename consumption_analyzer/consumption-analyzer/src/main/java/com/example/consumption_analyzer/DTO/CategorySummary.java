@@ -1,19 +1,17 @@
 package com.example.consumption_analyzer.DTO;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategorySummary {
+
     private String categoryName;
-    private BigDecimal totalAmount;
+    private Long totalAmount;
 
-    public CategorySummary(String categoryName, BigDecimal totalAmount) {
-        this.categoryName = categoryName;
-        this.totalAmount = totalAmount;
-    }
-
-    // Getters and Setters
-    public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
-    public BigDecimal getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
+    // 직접 작성했던 생성자와 Setter 메소드를 모두 삭제합니다.
+    // Lombok이 어노테이션을 통해 자동으로 필요한 메소드들을 만들어주기 때문입니다.
 }

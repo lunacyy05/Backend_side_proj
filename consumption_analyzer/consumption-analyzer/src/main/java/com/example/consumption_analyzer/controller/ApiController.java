@@ -1,47 +1,81 @@
 package com.example.consumption_analyzer.controller;
 
+import jakarta.validation.Valid;
 import com.example.consumption_analyzer.DTO.CategorySummary;
+import com.example.consumption_analyzer.DTO.TransactionRequestDTO;
 import com.example.consumption_analyzer.model.Category;
 import com.example.consumption_analyzer.model.Transaction;
 import com.example.consumption_analyzer.repository.CategoryRepository;
 import com.example.consumption_analyzer.repository.TransactionRepository;
+import com.example.consumption_analyzer.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.consumption_analyzer.DTO.DashboardSummaryDTO;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class ApiController {
 
-    private final TransactionRepository transactionRepository;
+    private final TransactionService transactionService;
     private final CategoryRepository categoryRepository;
+    private final TransactionRepository transactionRepository;
 
-    public ApiController(TransactionRepository transactionRepository, CategoryRepository categoryRepository) {
-        this.transactionRepository = transactionRepository;
+    public ApiController(TransactionService transactionService, CategoryRepository categoryRepository, TransactionRepository transactionRepository) {
+        this.transactionService = transactionService;
         this.categoryRepository = categoryRepository;
+        this.transactionRepository = transactionRepository;
     }
 
-    // 엔드포인트 1: 모든 카테고리 목록 조회
+    // --- Category API ---
     @GetMapping("/categories")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    // 엔드포인트 2: 새로운 거래 내역 생성
-    @PostMapping("/transactions")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-        // 실제 애플리케이션에서는 입력값 검증(validation)이 필요
-        transaction.setTransactionDate(LocalDate.now()); // 서버 시간 기준으로 날짜 설정
-        Transaction savedTransaction = transactionRepository.save(transaction);
-        return new ResponseEntity<>(savedTransaction, HttpStatus.CREATED);
+    // --- Transaction API (CRUD) ---
+
+    // 1. 모든 거래 내역 조회 (Read)
+    @GetMapping("/transactions")
+    public List<Transaction> getAllTransactions() {
+        return transactionService.getAllTransactions();
     }
 
-    // 엔드포인트 3: 카테고리별 지출 요약 데이터 조회
-    @GetMapping("/transactions/summary-by-category")
-    public List<CategorySummary> getTransactionSummary() {
-        return transactionRepository.getCategorySummaries();
+    // [수정] 2. '수입' 거래 내역 생성 (Create)
+    @PostMapping("/transactions/income")
+    public ResponseEntity<Transaction> createIncomeTransaction(@Valid @RequestBody TransactionRequestDTO requestDTO) { // ◀◀◀ @Valid 추가
+        requestDTO.setType("income");
+        Transaction createdTransaction = transactionService.createTransaction(requestDTO);
+        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
+    }
+
+    // [추가] 3. '지출' 거래 내역 생성 (Create)
+    @PostMapping("/transactions/expense")
+    public ResponseEntity<Transaction> createExpenseTransaction(@Valid @RequestBody TransactionRequestDTO requestDTO) { // ◀◀◀ @Valid 추가
+        requestDTO.setType("expense");
+        Transaction createdTransaction = transactionService.createTransaction(requestDTO);
+        return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
+    }
+
+    // 4. 특정 거래 내역 삭제 (Delete)
+    @DeleteMapping("/transactions/{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // --- 통계 API ---
+    // [수정] 5. 통계 요약 조회
+    @GetMapping("/summary")
+    public DashboardSummaryDTO getTransactionSummary() {
+        return transactionService.getDashboardSummary();
+    }
+
+    @PostMapping("/data/reset")
+    public ResponseEntity<Void> resetData() {
+        transactionService.resetAllData();
+        return ResponseEntity.ok().build();
     }
 }

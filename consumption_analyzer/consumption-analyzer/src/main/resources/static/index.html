@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소비 분석 대시보드</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="#main">메인</a></li>
+            <li><a href="#analysis">지출 분석</a></li>
+        </ul>
+    </nav>
+    <div class="theme-toggle">
+        <button id="light-theme-button" class="theme-toggle__button" aria-label="Switch to light theme">
+            <i class="fas fa-sun"></i>
+        </button>
+        <button id="dark-theme-button" class="theme-toggle__button" aria-label="Switch to dark theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section id="main" class="fullpage-section">
+        <div class="content-wrapper">
+            <div class="info-panel">
+                <div class="dashboard-header">
+                    <h1>대시보드</h1>
+                    <button id="reset-data-button" class="btn btn-secondary">데이터 초기화</button>
+                </div>
+                <div id="summary-cards">
+                    <div class="card"><strong>총 수입:</strong> <span id="total-income">₩0</span></div>
+                    <div class="card"><strong>총 지출:</strong> <span id="total-expense">₩0</span></div>
+                    <div class="card"><strong>잔액:</strong> <span id="balance">₩0</span></div>
+                </div>
+                <div class="progress-section">
+                    <span>남은 돈 0%</span>
+                    <div class="progress-bar"><div class="progress-bar__fill"></div></div>
+                </div>
+                <div class="legend">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div class="donut-chart">
+                <div class="donut-chart__hole">지출 구성</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="analysis" class="fullpage-section">
+        <h1>지출 분석</h1>
+        <div class="panel-container">
+            <div class="panel calendar-panel">
+                <div class="calendar-header">
+                    <span id="prev-month" class="calendar-header__nav">&lt;</span>
+                    <span id="month-year"></span>
+                    <span id="next-month" class="calendar-header__nav">&gt;</span>
+                </div>
+                <div class="calendar-grid">
+                </div>
+            </div>
+            <div class="panel details-panel">
+                <h3>상세 내역</h3>
+                <div id="event-details">
+                    <p>날짜를 선택하여 내역을 확인하세요.</p>
+                </div>
+            </div>
+            <div class="panel input-panel">
+                <h2>내역 입력</h2>
+                <div class="input-panel__columns">
+                    <form class="input-column">
+                        <h3>수입</h3>
+                        <div class="form-group">
+                            <label for="income-category">카테고리</label>
+                            <select id="income-category" class="form-select">
+                                <option value="" disabled selected>카테고리 선택</option>
+                                <option value="salary">월급</option>
+                                <option value="bonus">상여</option>
+                                <option value="investment">투자</option>
+                                <option value="etc">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="income-amount">수입 금액</label>
+                            <input type="text" inputmode="numeric" id="income-amount" class="form-input" placeholder="금액 입력">
+                        </div>
+                        <button type="button" id="save-income-button" class="btn">수입 추가</button>
+                    </form>
+                    <form class="input-column">
+                        <h3>지출</h3>
+                        <div class="form-group">
+                            <label for="expense-category">카테고리</label>
+                            <select id="expense-category" class="form-select">
+                                <option value="" disabled selected>카테고리 선택</option>
+                                <option value="food">식비</option>
+                                <option value="transportation">교통비</option>
+                                <option value="communication">통신비</option>
+                                <option value="living">생활비</option>
+                                <option value="medical">의료비</option>
+                                <option value="savings">저축</option>
+                                <option value="etc">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="expense-amount">지출 금액</label>
+                            <input type="text" inputmode="numeric" id="expense-amount" class="form-input" placeholder="금액 입력">
+                        </div>
+                        <button type="button" id="save-expense-button" class="btn">지출 추가</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="main.js"></script>
+</body>
+</html>
