@@ -1,0 +1,193 @@
+/* =================================================================
+   1. Root Variables & Basic Setup
+================================================================= */
+:root {
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --title-color: #FFFFFF;
+    --card-bg: #1c1c1e;
+    --border-color: #333;
+    --subtle-border-color: #2c2c2e;
+    --hover-color: #0A84FF;
+    --hover-color-darker: #0056b3;
+}
+
+body.light-theme {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --title-color: #000000;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --subtle-border-color: #e9ecef;
+    --hover-color: #007bff;
+    --hover-color-darker: #0056b3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Pretendard', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =================================================================
+   2. Reusable Components
+================================================================= */
+.panel {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: left;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    background-color: var(--hover-color);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.btn:hover { background-color: var(--hover-color-darker); }
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-color);
+    font-family: 'Pretendard', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--hover-color);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--hover-color) 30%, transparent);
+}
+.form-input::placeholder { color: #8E8E93; opacity: 0.8; }
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238E8E93' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+.form-select option { background-color: var(--card-bg); }
+
+/* =================================================================
+   3. Header & Navigation
+================================================================= */
+header {
+    position: fixed; top: 0; left: 0; width: 100%;
+    background-color: color-mix(in srgb, var(--bg-color) 80%, transparent);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 15px 5%;
+    border-bottom: 1px solid var(--border-color);
+    display: flex; justify-content: center; align-items: center;
+}
+nav ul { list-style: none; display: flex; gap: 40px; }
+nav a { color: var(--text-color); text-decoration: none; font-size: 18px; font-weight: 500; transition: color 0.3s ease; }
+nav a:hover { color: var(--hover-color); }
+.theme-toggle { position: absolute; right: 5%; display: flex; border: 1px solid var(--border-color); border-radius: 20px; background-color: var(--card-bg); padding: 3px; }
+.theme-toggle__button { background: none; border: none; color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s, color 0.3s; }
+.theme-toggle__button.active { background-color: var(--hover-color); color: white; }
+.theme-toggle__button .fa-sun { display: none; }
+.theme-toggle__button .fa-moon { display: block; }
+body.light-theme .theme-toggle__button .fa-sun { display: block; }
+body.light-theme .theme-toggle__button .fa-moon { display: none; }
+
+/* =================================================================
+   4. General Section Layout
+================================================================= */
+.fullpage-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 120px 5%; border-bottom: 1px solid var(--subtle-border-color); text-align: center; }
+.fullpage-section h1 { font-size: 48px; margin-bottom: 40px; font-weight: 700; color: var(--title-color); }
+
+/* =================================================================
+   5. Section 1: Main Dashboard (#main)
+================================================================= */
+#main .content-wrapper { display: flex; justify-content: center; align-items: center; gap: 80px; width: 100%; max-width: 1200px; }
+#main .info-panel { flex-basis: 50%; display: flex; flex-direction: column; gap: 30px; text-align: left; }
+#main .card { padding: 20px; border-radius: 12px; font-size: 18px; background-color: var(--card-bg); border: 1px solid var(--border-color); }
+#main .progress-section { display: flex; align-items: center; font-size: 18px; }
+#main .progress-bar { flex-grow: 1; height: 12px; border-radius: 6px; margin: 0 20px; background-color: var(--subtle-border-color); }
+#main .progress-bar__fill { width: 0%; height: 100%; background-color: #0A84FF; border-radius: 6px; transition: width 0.5s ease; }
+#main .legend ul { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+#main .legend li { display: flex; align-items: center; font-size: 18px; }
+#main .legend .dot { width: 16px; height: 16px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
+#main .legend .dashes { flex-grow: 1; border-bottom: 2px dotted #444; margin: 0 15px; }
+#main .donut-chart { width: 350px; height: 350px; border-radius: 50%; background: var(--subtle-border-color); display: flex; justify-content: center; align-items: center; flex-shrink: 0; transition: background 0.5s ease; }
+#main .donut-chart__hole { width: 230px; height: 230px; border-radius: 50%; background-color: var(--bg-color); display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 600; transition: background-color 0.3s; }
+
+/* =================================================================
+   6. Section 2: Expense Analysis (#analysis)
+================================================================= */
+#analysis .panel-container { display: flex; gap: 24px; align-items: stretch; width: 100%; max-width: 1400px; justify-content: center; }
+/* --- Calendar Panel --- */
+.calendar-panel { width: 420px; flex-shrink: 0; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 600; font-size: 20px; }
+.calendar-header__nav { cursor: pointer; padding: 0 10px; user-select: none; transition: color 0.2s ease; }
+.calendar-header__nav:hover { color: var(--hover-color); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; }
+.day-name { font-size: 14px; color: #8E8E93; font-weight: 500; }
+.day-number { font-size: 16px; cursor: pointer; width: 36px; height: 36px; line-height: 36px; margin: 0 auto; border-radius: 50%; transition: background-color 0.3s ease, color 0.3s ease; }
+.day-number:hover { background-color: var(--subtle-border-color); }
+.day-number.today { box-shadow: 0 0 0 1px var(--hover-color); }
+.day-number.selected { background-color: var(--hover-color); color: white !important; font-weight: 600; }
+/* --- Details Panel --- */
+.details-panel { width: 360px; flex-shrink: 0; display: flex; flex-direction: column; }
+.details-panel h3 { font-size: 22px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
+#event-details { overflow-y: auto; flex-grow: 1; }
+#event-details h4 { font-size: 18px; font-weight: 600; color: var(--title-color); margin-bottom: 15px; }
+.transaction-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--subtle-border-color); font-size: 16px; }
+.transaction-item:last-child { border-bottom: none; }
+.transaction-item .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 12px; flex-shrink: 0; }
+.transaction-item .name { flex-grow: 1; margin-right: 12px; }
+.transaction-item .amount { font-weight: 600; white-space: nowrap; }
+.transaction-item .amount.income { color: #0A84FF; }
+.transaction-item .amount.expense { color: #FF453A; }
+/* --- Input Panel --- */
+.input-panel { flex-grow: 1; }
+.input-panel h2 { font-size: 22px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+.input-panel__columns { display: flex; gap: 24px; }
+.input-column { flex: 1; display: flex; flex-direction: column; }
+.input-column h3 { font-size: 18px; font-weight: 600; padding-bottom: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--subtle-border-color); }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 500; }
+.input-column .btn { margin-top: auto; }
+
+/* =================================================================
+   7. Additional Component Styles
+================================================================= */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.btn.btn-secondary {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    width: auto;
+}
+.btn.btn-secondary:hover {
+    background-color: var(--subtle-border-color);
+    border-color: var(--hover-color);
+}
