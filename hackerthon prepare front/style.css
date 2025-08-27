@@ -1,7 +1,22 @@
+/*
+ * 메인 스타일시트 (style.css)
+ *
+ * 목차:
+ * 1. Root Variables & Basic Setup (전역 변수 및 기본 설정)
+ * 2. Reusable Components (재사용 가능 컴포넌트: 패널, 버튼, 폼 요소)
+ * 3. Header & Navigation (헤더 및 네비게이션)
+ * 4. General Section Layout (전체 섹션 공통 레이아웃)
+ * 5. Section 1: Main Dashboard (메인 대시보드)
+ * 6. Section 2: Expense Analysis (지출 분석)
+ * 7. Additional Component Styles (추가 컴포넌트 스타일)
+ */
+
+
 /* =================================================================
    1. Root Variables & Basic Setup
 ================================================================= */
 :root {
+    /* 다크 모드 기본 색상 변수 */
     --bg-color: #121212;
     --text-color: #E0E0E0;
     --title-color: #FFFFFF;
@@ -13,6 +28,7 @@
 }
 
 body.light-theme {
+    /* 라이트 모드 색상 변수 (body에 'light-theme' 클래스가 있을 때 적용) */
     --bg-color: #f8f9fa;
     --text-color: #212529;
     --title-color: #000000;
@@ -23,9 +39,10 @@ body.light-theme {
     --hover-color-darker: #0056b3;
 }
 
+/* 브라우저 기본 스타일 초기화 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; /* 부드러운 스크롤 이동 효과 */ }
 
 body {
     background-color: var(--bg-color);
@@ -35,8 +52,9 @@ body {
 }
 
 /* =================================================================
-   2. Reusable Components
+   2. Reusable Components (재사용 가능 컴포넌트)
 ================================================================= */
+/* 패널 공통 스타일 (달력, 상세 내역, 입력 패널 등) */
 .panel {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -46,6 +64,7 @@ body {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
+/* 버튼 공통 스타일 */
 .btn {
     width: 100%;
     padding: 12px 15px;
@@ -60,6 +79,7 @@ body {
 }
 .btn:hover { background-color: var(--hover-color-darker); }
 
+/* 폼 입력(input) 및 선택(select) 공통 스타일 */
 .form-input, .form-select {
     width: 100%;
     padding: 12px 15px;
@@ -70,16 +90,19 @@ body {
     color: var(--text-color);
     font-family: 'Pretendard', sans-serif;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* 브라우저 기본 UI 스타일 제거 (특히 iOS) */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
+/* 폼 요소 포커스 시 테두리 강조 효과 */
 .form-input:focus, .form-select:focus {
     outline: none;
     border-color: var(--hover-color);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--hover-color) 30%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--hover-color) 30%, transparent); /* 테두리 바깥쪽에 은은한 그림자 효과 */
 }
 .form-input::placeholder { color: #8E8E93; opacity: 0.8; }
+/* select 태그에 커스텀 드롭다운 화살표 추가 */
 .form-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238E8E93' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -88,12 +111,12 @@ body {
 .form-select option { background-color: var(--card-bg); }
 
 /* =================================================================
-   3. Header & Navigation
+   3. Header & Navigation (헤더 및 네비게이션)
 ================================================================= */
 header {
     position: fixed; top: 0; left: 0; width: 100%;
-    background-color: color-mix(in srgb, var(--bg-color) 80%, transparent);
-    backdrop-filter: blur(10px);
+    background-color: color-mix(in srgb, var(--bg-color) 80%, transparent); /* 반투명 배경 */
+    backdrop-filter: blur(10px); /* 배경 블러 효과 */
     z-index: 1000;
     padding: 15px 5%;
     border-bottom: 1px solid var(--border-color);
@@ -102,6 +125,8 @@ header {
 nav ul { list-style: none; display: flex; gap: 40px; }
 nav a { color: var(--text-color); text-decoration: none; font-size: 18px; font-weight: 500; transition: color 0.3s ease; }
 nav a:hover { color: var(--hover-color); }
+
+/* 테마 변경 토글 스위치 */
 .theme-toggle { position: absolute; right: 5%; display: flex; border: 1px solid var(--border-color); border-radius: 20px; background-color: var(--card-bg); padding: 3px; }
 .theme-toggle__button { background: none; border: none; color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s, color 0.3s; }
 .theme-toggle__button.active { background-color: var(--hover-color); color: white; }
@@ -111,7 +136,7 @@ body.light-theme .theme-toggle__button .fa-sun { display: block; }
 body.light-theme .theme-toggle__button .fa-moon { display: none; }
 
 /* =================================================================
-   4. General Section Layout
+   4. General Section Layout (전체 섹션 공통 레이아웃)
 ================================================================= */
 .fullpage-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 120px 5%; border-bottom: 1px solid var(--subtle-border-color); text-align: center; }
 .fullpage-section h1 { font-size: 48px; margin-bottom: 40px; font-weight: 700; color: var(--title-color); }
@@ -145,7 +170,7 @@ body.light-theme .theme-toggle__button .fa-moon { display: none; }
 .day-name { font-size: 14px; color: #8E8E93; font-weight: 500; }
 .day-number { font-size: 16px; cursor: pointer; width: 36px; height: 36px; line-height: 36px; margin: 0 auto; border-radius: 50%; transition: background-color 0.3s ease, color 0.3s ease; }
 .day-number:hover { background-color: var(--subtle-border-color); }
-.day-number.today { box-shadow: 0 0 0 1px var(--hover-color); }
+.day-number.today { box-shadow: 0 0 0 1px var(--hover-color); } /* 오늘 날짜는 테두리로 표시 */
 .day-number.selected { background-color: var(--hover-color); color: white !important; font-weight: 600; }
 /* --- Details Panel --- */
 .details-panel { width: 360px; flex-shrink: 0; display: flex; flex-direction: column; }
@@ -167,17 +192,19 @@ body.light-theme .theme-toggle__button .fa-moon { display: none; }
 .input-column h3 { font-size: 18px; font-weight: 600; padding-bottom: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--subtle-border-color); }
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 500; }
-.input-column .btn { margin-top: auto; }
+.input-column .btn { margin-top: auto; /* 버튼을 항상 수직 방향의 맨 아래에 위치시킴 */ }
 
 /* =================================================================
-   7. Additional Component Styles
+   7. Additional Component Styles (추가 컴포넌트 스타일)
 ================================================================= */
+/* 대시보드 헤더 (제목 + 초기화 버튼) */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
+/* 보조 버튼 (데이터 초기화 버튼) */
 .btn.btn-secondary {
     background-color: var(--card-bg);
     color: var(--text-color);
@@ -185,7 +212,7 @@ body.light-theme .theme-toggle__button .fa-moon { display: none; }
     padding: 8px 16px;
     font-size: 14px;
     font-weight: 500;
-    width: auto;
+    width: auto; /* 너비를 내용에 맞게 자동 조절 */
 }
 .btn.btn-secondary:hover {
     background-color: var(--subtle-border-color);
