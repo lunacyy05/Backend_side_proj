@@ -4,7 +4,7 @@
     --bg-color: #f5f5f7;
     --primary-text-color: #1d1d1f;
     --secondary-text-color: #6e6e73;
-    --container-bg-color: #ffffff;
+    --card-bg-color: #ffffff;
     --border-color: #d2d2d7;
     --accent-color: #007aff;
     --accent-hover-color: #0071e3;
@@ -47,8 +47,8 @@ header p {
     font-size: 1.1rem;
 }
 
-.composer {
-    background-color: var(--container-bg-color);
+.card {
+    background-color: var(--card-bg-color);
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -58,6 +58,7 @@ header p {
 
 .toolbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
     margin-bottom: 15px;
@@ -73,7 +74,7 @@ header p {
     border-radius: 6px;
     background-color: #fff;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .tool-item:hover {
@@ -110,7 +111,7 @@ header p {
     pointer-events: none;
 }
 
-#post-btn {
+#post-btn, #analyze-btn {
     display: block;
     width: 100%;
     padding: 12px;
@@ -125,9 +126,70 @@ header p {
     transition: background-color 0.2s;
 }
 
-#post-btn:hover {
+#post-btn:hover, #analyze-btn:hover {
     background-color: var(--accent-hover-color);
 }
+
+.ai-section h2, #feed h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+.ai-section .description {
+    color: var(--secondary-text-color);
+    margin-bottom: 15px;
+}
+
+#ai-result-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+#ai-result-container.hidden {
+    display: none;
+}
+
+#loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: var(--accent-color);
+    border-radius: 50%;
+    display: block;
+    margin: 20px auto;
+    animation: rotation 1s linear infinite;
+}
+#loader.hidden {
+    display: none;
+}
+
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.analysis-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.chart-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#ai-advice {
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    padding: 15px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    font-size: 1rem;
+}
+
 
 #feed {
     display: flex;
@@ -136,7 +198,7 @@ header p {
 }
 
 .post {
-    background-color: var(--container-bg-color);
+    background-color: var(--card-bg-color);
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);

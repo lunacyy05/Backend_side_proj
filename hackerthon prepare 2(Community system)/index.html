@@ -11,25 +11,26 @@
     <div class="container">
         <header>
             <h1>마음의 소리</h1>
-            <p>이곳에 당신의 스트레스를 털어놓으세요. 누구도 당신을 알지 못합니다.</p>
+            <p>이곳에 당신의 스트레스를 털어놓으세요. 당신의 이야기는 AI 상담사가 들어드립니다.</p>
         </header>
 
         <main>
-            <div class="composer">
+            <!-- 글 작성 섹션 -->
+            <div class="card composer">
                 <div class="toolbar">
-                    <select id="font-family" class="tool-item">
+                    <select id="font-family" class="tool-item" aria-label="글꼴 선택">
                         <option value="Noto Sans KR, sans-serif">기본 폰트</option>
                         <option value="Gowun Dodum, sans-serif">고운 돋움</option>
                         <option value="Nanum Myeongjo, serif">나눔 명조</option>
                         <option value="Nanum Pen Script, cursive">나눔 펜 스크립트</option>
                     </select>
-                    <select id="font-size" class="tool-item">
+                    <select id="font-size" class="tool-item" aria-label="글자 크기 선택">
                         <option value="16px">16px</option>
                         <option value="20px">20px</option>
                         <option value="24px">24px</option>
                         <option value="28px">28px</option>
                     </select>
-                    <button id="bold-btn" class="tool-item">
+                    <button id="bold-btn" class="tool-item" aria-label="굵게">
                         <i class="fa-solid fa-bold"></i>
                     </button>
                 </div>
@@ -37,11 +38,33 @@
                 <button id="post-btn">글 남기기</button>
             </div>
 
-            <div id="feed">
+            <!-- AI 분석 섹션 -->
+            <div class="card ai-section">
+                <h2>AI 분석 리포트</h2>
+                <p class="description">작성된 글들을 바탕으로 AI가 당신의 마음을 분석해 드립니다.</p>
+                <button id="analyze-btn">AI 분석 요청하기</button>
+                <div id="ai-result-container" class="hidden">
+                    <div id="loader" class="hidden"></div>
+                    <div class="analysis-content">
+                         <h3>스트레스 원인 분석</h3>
+                         <div class="chart-container">
+                            <canvas id="stress-chart"></canvas>
+                         </div>
+                         <h3>AI의 조언</h3>
+                         <div id="ai-advice"></div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- 피드 섹션 -->
+            <div id="feed">
+                <h2>나의 글 목록</h2>
+                <!-- 게시글이 여기에 추가됩니다. -->
+            </div>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
