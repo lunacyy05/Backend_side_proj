@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환율 계산기</title>
+    <title>환율 및 가상화폐 계산기</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h2>환율 계산기</h2>
+        <h2>환율 및 가상화폐 계산기</h2>
         <div class="converter-box">
             <div class="input-group">
                 <label for="amount">금액:</label>
@@ -17,20 +17,28 @@
             <div class="input-group">
                 <label for="from-currency">보내는 통화:</label>
                 <select id="from-currency">
+                    <option value="KRW" selected>KRW - 대한민국 원</option>
                     <option value="USD">USD - 미국 달러</option>
                     <option value="EUR">EUR - 유로</option>
                     <option value="JPY">JPY - 일본 엔</option>
-                    <option value="KRW" selected>KRW - 대한민국 원</option>
+                    <option value="CNY">CNY - 중국 위안</option>
+                    <option value="BTC">BTC - 비트코인</option>
+                    <option value="ETH">ETH - 이더리움</option>
+                    <option value="XRP">XRP - 리플</option>
                 </select>
             </div>
             <div class="swap">⇄</div>
             <div class="input-group">
                 <label for="to-currency">받는 통화:</label>
                 <select id="to-currency">
+                    <option value="KRW">KRW - 대한민국 원</option>
                     <option value="USD" selected>USD - 미국 달러</option>
                     <option value="EUR">EUR - 유로</option>
                     <option value="JPY">JPY - 일본 엔</option>
-                    <option value="KRW">KRW - 대한민국 원</option>
+                    <option value="CNY">CNY - 중국 위안</option>
+                    <option value="BTC">BTC - 비트코인</option>
+                    <option value="ETH">ETH - 이더리움</option>
+                    <option value="XRP">XRP - 리플</option>
                 </select>
             </div>
             <button id="convert-btn">계산하기</button>
@@ -39,7 +47,15 @@
                 <p id="result-text"></p>
             </div>
         </div>
+
+        <div class="chart-container">
+            <h3>최근 30일 환율 변동</h3>
+            <canvas id="exchange-rate-chart"></canvas>
+            <p id="chart-loading-text" class="loading-text"></p>
+        </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
